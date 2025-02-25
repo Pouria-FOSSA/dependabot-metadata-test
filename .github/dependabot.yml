@@ -1,0 +1,40 @@
+# This is how we configure dependabot for this repo
+
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      # Use Pacific Standard Time (UTC -08:00)
+      timezone: "America/Los_Angeles"
+    reviewers:
+      - "@fossas/dependabot-reviewers"
+    ignore:
+      - dependency-name: "@types/*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "@storybook/*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor", "version-update:semver-patch"]
+      - dependency-name: "*"
+        update-types: ["version-update:semver-patch"]
+    groups:
+      aws-sdk:
+        patterns:
+          - "@aws-sdk/*"
+      date-fns:
+        patterns:
+          - "date-fns*"
+      babel:
+        patterns:
+          - "@babel/*"
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      # Use Pacific Standard Time (UTC -08:00)
+      timezone: "America/Los_Angeles"
+    reviewers:
+      - "@fossas/dependabot-reviewers"

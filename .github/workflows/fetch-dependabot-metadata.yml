@@ -1,0 +1,25 @@
+name: Fetch Dependabot Metadata
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  extract-metadata:
+    if: github.actor == 'dependabot[bot]'  # Runs only for Dependabot PRs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Dependabot Metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1
+
+      - name: Print metadata
+        run: |
+          echo "Package: ${{ steps.metadata.outputs.package }}"
+          echo "From version: ${{ steps.metadata.outputs.previous-version }}"
+          echo "To version: ${{ steps.metadata.outputs.new-version }}"
+          echo "Repo URL: ${{ steps.metadata.outputs.source-url }}"
+          echo "Dependency type: ${{ steps.metadata.outputs.dependency-type }}"
+          echo "Update type: ${{ steps.metadata.outputs.update-type }}"
