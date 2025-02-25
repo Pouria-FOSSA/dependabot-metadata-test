@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Fetch Dependabot Metadata
         id: metadata
-        uses: dependabot/fetch-metadata@v1
+        uses: dependabot/fetch-metadata@v2
 
       - name: Add Labels Based on Metadata
         uses: actions-ecosystem/action-add-labels@v1
@@ -44,8 +44,9 @@ jobs:
             - **Package Ecosystem**: \`${{ steps.metadata.outputs.package-ecosystem }}\`
             - **From version**: \`${{ steps.metadata.outputs.previous-version }}\`
             - **To version**: \`${{ steps.metadata.outputs.new-version }}\`
-            - **Repo URL**: [Link](${{ steps.metadata.outputs.source-url }})
+            - **URL**: \`${{ steps.metadata.outputs.source-url }}\`
             - **Compatibility Score**: \`${{ steps.metadata.outputs.compatibility-score }}\`
+            - **Maintainer Changes**: \`${{ steps.metadata.outputs.maintainer-changes }}\`
             - **Update Type**: \`${{ steps.metadata.outputs.update-type }}\`
             - **Updated Dependencies JSON**: \`${{ steps.metadata.outputs.updated-dependencies-json }}\`
             `
