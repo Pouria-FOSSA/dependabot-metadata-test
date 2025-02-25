@@ -10,7 +10,7 @@ updates:
       # Use Pacific Standard Time (UTC -08:00)
       timezone: "America/Los_Angeles"
     reviewers:
-      - "@fossas/dependabot-reviewers"
+      - "@Pouria-FOSSA"
     ignore:
       - dependency-name: "@types/*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
@@ -29,12 +29,3 @@ updates:
         patterns:
           - "@babel/*"
 
-  - package-ecosystem: "docker"
-    directory: "/"
-    schedule:
-      interval: "daily"
-      time: "09:00"
-      # Use Pacific Standard Time (UTC -08:00)
-      timezone: "America/Los_Angeles"
-    reviewers:
-      - "@fossas/dependabot-reviewers"
