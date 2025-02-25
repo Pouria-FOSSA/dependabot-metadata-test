@@ -22,7 +22,31 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: |
-            package:${{ steps.metadata.outputs.package }}
+            dependency-names:${{ steps.metadata.outputs.dependency-names }}
             from:${{ steps.metadata.outputs.previous-version }}
             to:${{ steps.metadata.outputs.new-version }}
             update-type:${{ steps.metadata.outputs.update-type }}
+            compatibility-score:${{ steps.metadata.outputs.compatibility-score }}
+            
+
+      - name: Comment on PR with Metadata
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `
+            ### 🤖 Dependabot Metadata:
+            - **Dependency Names**: \`${{ steps.metadata.outputs.dependency-names }}\`
+            - **Package Ecosystem**: \`${{ steps.metadata.outputs.package-ecosystem }}\`
+            - **From version**: \`${{ steps.metadata.outputs.previous-version }}\`
+            - **To version**: \`${{ steps.metadata.outputs.new-version }}\`
+            - **Repo URL**: [Link](${{ steps.metadata.outputs.source-url }})
+            - **Compatibility Score**: \`${{ steps.metadata.outputs.compatibility-score }}\`
+            - **Update Type**: \`${{ steps.metadata.outputs.update-type }}\`
+            - **Updated Dependencies JSON**: \`${{ steps.metadata.outputs.updated-dependencies-json }}\`
+            `
+            });
