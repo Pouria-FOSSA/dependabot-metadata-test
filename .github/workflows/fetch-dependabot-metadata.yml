@@ -10,6 +10,8 @@ jobs:
   extract-metadata:
     if: github.actor == 'dependabot[bot]'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Fetch Dependabot Metadata
         id: metadata
@@ -18,7 +20,7 @@ jobs:
       - name: Add Labels Based on Metadata
         uses: actions-ecosystem/action-add-labels@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_PAT }}
           labels: |
             package:${{ steps.metadata.outputs.package }}
             from:${{ steps.metadata.outputs.previous-version }}
