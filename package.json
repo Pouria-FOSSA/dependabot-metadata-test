@@ -2,13 +2,12 @@
   "name": "dependabot-metadata-test",
   "version": "1.0.0",
   "description": "Basic CRUD app with React/TS frontend and Express/TS backend",
-  "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node src/index.ts",
-    "dev:server": "ts-node src/index.ts",
-    "dev:client": "parcel src/client/index.html --dist-dir dist/client",
-    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "PORT=6017 ts-node src/index.ts",
+    "dev:client": "PORT=6016 parcel src/client/index.html --dist-dir dist/client",
+    "dev": "concurrently \"yarn dev:server\" \"yarn dev:client\"",
     "build": "parcel build src/client/index.html --dist-dir dist/client"
   },
   "keywords": ["crud", "typescript", "react", "express"],
