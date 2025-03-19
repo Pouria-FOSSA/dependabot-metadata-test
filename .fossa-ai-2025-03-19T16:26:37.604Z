@@ -1,0 +1,41 @@
+```typescript
+import { createUser } from './createUser';
+import axios from 'axios';
+
+jest.mock('axios');
+
+describe('createUser', () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  it('should create a new user successfully', async () => {
+    const userData = {
+      name: 'John Doe',
+      email: 'john@example.com',
+      password: 'password123',
+    };
+    const expectedResponse = { id: 1, ...userData };
+
+    (axios.post as jest.MockedFunction<typeof axios.post>).mockResolvedValueOnce({ data: expectedResponse });
+
+    const result = await createUser(userData);
+
+    expect(axios.post).toHaveBeenCalledWith('/api/users', userData);
+    expect(result).toEqual(expectedResponse);
+  });
+
+  it('should throw an error if user creation fails', async () => {
+    const userData = {
+      name: 'John Doe',
+      email: 'john@example.com',
+      password: 'password123',
+    };
+    const errorMessage = 'User creation failed';
+
+    (axios.post as jest.MockedFunction<typeof axios.post>).mockRejectedValueOnce(new Error(errorMessage));
+
+    await expect(createUser(userData)).rejects.toThrow(errorMessage);
+  });
+});
+```
